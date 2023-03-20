@@ -7,7 +7,7 @@ export default function Nav(){
         <div className=" bg-yellow-300 h-[60px] flex justify-between px-4 items-center " >
             <h2>InfoTendencia</h2>
             <div>
-                <Link to={"/articulos"}>
+                <Link to={"/articles"}>
                     <h4>Articulos</h4>
                 </Link>
             </div>

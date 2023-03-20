@@ -2,13 +2,14 @@ import { Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Articles from "./components/Articles";
 import CreateArticles from "./components/CreateArticles";
+import HomePage from "./components/HomePage";
 
 function App() {
   
   return (
-    <div>
+    <div className="app">
       <Nav/>
-      <Route path={"/"} render={() => <h1 className=" bg-red-300 " >Hello World!</h1>} />
+      <Route exact path={"/"} render={() => <HomePage/>} />
       <Route path={"/articles"} render={() => <Articles/>} />
       <Route path={"/createarticles"} render={() => <CreateArticles/>} />
     </div>
