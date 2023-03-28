@@ -48,7 +48,7 @@ function App() {
             data-full-width-responsive="true"
           ></ins>
           <div>
-            <h1>Hola</h1>
+            <h1>Hi World</h1>
           </div>
           <ins
             className="adsbygoogle"
@@ -59,7 +59,7 @@ function App() {
             data-full-width-responsive="true"
           ></ins>
           <div>
-            <h2>Chau</h2>
+            <h2>Hola Mundo</h2>
           </div>
           <ins
             className="adsbygoogle"
@@ -70,7 +70,7 @@ function App() {
             data-full-width-responsive="true"
           ></ins>
           <div>
-            <h3>caca</h3>
+            <h3>Hello World</h3>
           </div>
 
     </div>
