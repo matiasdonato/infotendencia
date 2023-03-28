@@ -1,26 +1,54 @@
+import axios from "axios";
 import { useState } from "react";
 
 export default function CreateArticles(){
 
+
+    interface Image{
+      prev: string,
+      file: string,
+    }
+
     interface Data {
         id: string
         dataType: string
-        data: string
+        data: any
     }
 
   const [title, setTitle] = useState<string>("")
-  const [articleImage, setArticleImage] = useState<string>("");
+  const [articleImage, setArticleImage] = useState<Image>();
   const [data, setData] = useState<Data[]>([])
   const [addData, setAddData] = useState<string>("")
   const [text, setText] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [subTitle, setSubTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    // do something with text, image, and url
-  };
+
+  //adding metadata
+  let head = document.querySelector("head")
+  let oldTilte = document.querySelector("title")
+  let meta = document.getElementById("description")
+  //@ts-ignore
+  head?.removeChild(oldTilte)
+  //@ts-ignore
+  let headTitle = document.createElement("title") 
+  headTitle.innerHTML = title
+  head?.appendChild(headTitle)
+  //@ts-ignore
+  meta.content = description
+
+
+
+  function generarCodigoAleatorio() {
+    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let codigo = '';
+    for (let i = 0; i < 18; i++) {
+      codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return codigo;
+  }
 
   const handleTextChange = (event: any) => {
     setText(event.target.value);
@@ -28,7 +56,7 @@ export default function CreateArticles(){
   console.log(text)
   function textSubmit() {
     
-    setData([...data, {id: `${data.length}`, dataType: "text", data: text}]);
+    setData([...data, {id: `${generarCodigoAleatorio()}`, dataType: "text", data: text}]);
     setText("")
     setAddData("")
   }
@@ -38,25 +66,30 @@ export default function CreateArticles(){
     reader.onload = () => {
       if (reader.readyState === 2) {
         // @ts-ignore
-        setImage(reader.result);
+        setImage({prev: reader.result, file: imagefile.files[0] });
       }
     };
+    let imagefile = document.querySelector('#dataImage');
     reader.readAsDataURL(event.target.files[0]);
   };
+
+  console.log(data)
 
   const handleArticleImageChange = (event: any) => {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
         // @ts-ignore
-        setArticleImage(reader.result);
+        setArticleImage({prev: reader.result, file: imagefile.files[0] });
       }
     };
+    let imagefile = document.querySelector('#articleImage');
     reader.readAsDataURL(event.target.files[0]);
   };
+  console.log(articleImage)
 
   function imageSubmit() {
-    setData([...data, {id: `${data.length}`, dataType: "image", data: image}]);
+    setData([...data, {id: `${generarCodigoAleatorio()}`, dataType: "image", data: image}]);
     setImage("")
     setAddData("")
   }
@@ -66,7 +99,7 @@ export default function CreateArticles(){
   };
 
   function urlSubmit() {
-    setData([...data, {id: `${data.length}`, dataType: "url", data: url}]);
+    setData([...data, {id: `${generarCodigoAleatorio()}`, dataType: "url", data: url}]);
     setUrl("")
     setAddData("")
   }
@@ -76,7 +109,7 @@ export default function CreateArticles(){
   };
 
   function subTitleSubmit() {
-    setData([...data, {id: `${data.length}`, dataType: "subtitle", data: subTitle}]);
+    setData([...data, {id: `${generarCodigoAleatorio()}`, dataType: "subtitle", data: subTitle}]);
     setSubTitle("")
     setAddData("")
   }
@@ -101,7 +134,7 @@ export default function CreateArticles(){
         )
     }else if(d.dataType === "image"){
         return(
-            <img id={`img${d.id}`} src={d.data} alt="infotendencia img" style={{ maxWidth: '100px' }} />
+            <img className=" max-h-[300px] " id={`img${d.id}`} src={d.data.prev} alt="infotendencia img" />
         )
     }else{
         return(
@@ -176,6 +209,7 @@ export default function CreateArticles(){
     }else if(d.dataType === "image"){
       let input = document.createElement("input");
       input.type = "file";
+      input.name = "image"
       // @ts-ignore
       let oldImage = document.getElementById(`img${d.id}`);
       element?.appendChild(input)
@@ -187,11 +221,12 @@ export default function CreateArticles(){
         reader.onload = () => {
           if (reader.readyState === 2) {
             // @ts-ignore
-            value = reader.result;
+            value = {prev: reader.result, file: input.files[0]}
           }
         };
         // @ts-ignore
         reader.readAsDataURL(event.target.files[0]);
+        
       })
       button.addEventListener("click", function(){
         // @ts-ignore
@@ -220,6 +255,36 @@ export default function CreateArticles(){
   }
 
 
+  async function createArticle() {
+    let images = [articleImage?.file]
+
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].dataType === "image") {
+        images.push(data[i].data.file)
+        data[i].data = images.length
+      }
+    }
+    console.log(data)
+    console.log(images)
+
+    const obj = {
+      title,
+      images,
+      data,
+      description
+    }
+
+//title, image: articleImage?.file, data,
+    return axios.post("http://localhost:3001/article", obj , {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(r => console.log(r))
+    .catch(err => console.log(err))
+  }
+
+
 
   return (
     <div className="flex justify-center  " >
@@ -228,12 +293,16 @@ export default function CreateArticles(){
                 <span className=" mr-2 text-[1.8rem] font-[700]">Title:</span>
                 <input className=" px-2 text-[1.6rem] font-[500] w-[500px] border-b-[1px] border-gray-400 " type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
+            <div className=" flex justify-center items-center mt-4 flex-col " >
+                <span className=" text-[1.4rem] font-[500] mb-2">Description (SEO):</span>
+                <input className=" border-[1px] rounded-[10px] border-gray-400 text-[1.1rem] p-2 font-[400] w-[450px] " type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+            </div>
             <div className=" flex flex-col mt-[20px] border-[1px] rounded-[8px] border-gray-400 gap-4 p-4 " >
                 <span className=" mr-2  text-[1.4rem] font-[700]" >Article Image:</span>
-                {articleImage && (
-                    <img className=" w-[300px] " src={articleImage} alt="new article"/>
+                {articleImage?.prev && (
+                    <img className=" w-[300px] " src={articleImage.prev} alt="new article"/>
                 )}
-                <input type="file" onChange={handleArticleImageChange} />
+                <input id="articleImage" type="file" name="image" onChange={handleArticleImageChange} />
             </div>
             {
               data.length > 0 && 
@@ -267,7 +336,7 @@ export default function CreateArticles(){
                 addData === "image" ? 
                 <div className=" flex justify-center items-center mt-4 flex-col " >
                     <span className=" text-[1.4rem] font-[500] mb-2">Image:</span>
-                    <input type="file" onChange={handleImageChange} />
+                    <input type="file" name="image" id="dataImage" onChange={handleImageChange} />
                     <button className=" bg-gray-300 text-[1.2rem] font-[500] hover:scale-[1.05] mt-3 hover:bg-gray-400 transition-all w-[100px] h-[50px] rounded-[10px] "  onClick={imageSubmit} >Submit</button>
                 </div> : 
                 addData === "url" ?
@@ -282,6 +351,10 @@ export default function CreateArticles(){
                     <button className=" bg-gray-300 text-[1.2rem] font-[500] hover:scale-[1.05] mt-3 hover:bg-gray-400 transition-all w-[100px] h-[50px] rounded-[10px] "  onClick={subTitleSubmit} >Submit</button>
                 </div> } 
               </div>}
+              <div className=" flex mt-[40px]" >
+                <button onClick={createArticle} className=" bg-gray-300 text-[1.2rem] font-[500] hover:scale-[1.05] mt-3 hover:bg-yellow-400  transition-all w-[100px] h-[50px] rounded-[10px]" >Submit</button>
+              </div>
+            
         </div>
     </div>
   );
