@@ -4,11 +4,15 @@ import Articles from "./components/Articles";
 import CreateArticles from "./components/CreateArticles";
 import HomePage from "./components/HomePage";
 import { Helmet } from "react-helmet";
+import {useEffect} from "react"
 
 function App() {
 
   
-  
+  useEffect(() => {
+    //@ts-ignore
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }, []);
   // <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2912035208235100" crossorigin="anonymous"></script>
   
   //@ts-nocheck
@@ -23,6 +27,7 @@ function App() {
   // //@ts-ignore
   // ins.data-ad-client = "ca-pub-2912035208235100" 
   
+  
 
 
   return (
@@ -31,38 +36,35 @@ function App() {
       <Route exact path={"/"} render={() => <HomePage/>} />
       <Route path={"/articles"} render={() => <Articles/>} />
       <Route path={"/createarticles"} render={() => <CreateArticles/>} />
-      <div>
-        <Helmet>
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2912035208235100" crossOrigin="anonymous"></script>
-          <script>
-            {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-          </script>
-        </Helmet>
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-2912035208235100"
-          data-ad-slot="6622030279"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-2912035208235100"
-          data-ad-slot="6622030289"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-2912035208235100"
-          data-ad-slot="6622030299"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-      </div>
+          <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2912035208235100" 
+          crossOrigin="anonymous"></script>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-2912035208235100"
+            data-ad-slot="4220062361"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-2912035208235100"
+            data-ad-slot="6622030280"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-2912035208235100"
+            data-ad-slot="6347532257"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+
     </div>
   );
 }
