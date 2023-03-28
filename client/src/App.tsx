@@ -46,6 +46,22 @@ function App() {
           data-ad-format="auto"
           data-full-width-responsive="true"
         ></ins>
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-2912035208235100"
+          data-ad-slot="6622030289"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-2912035208235100"
+          data-ad-slot="6622030299"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
       </div>
     </div>
   );
