@@ -3,7 +3,6 @@ import Nav from "./components/Nav";
 import Articles from "./components/Articles";
 import CreateArticles from "./components/CreateArticles";
 import HomePage from "./components/HomePage";
-import { Helmet } from "react-helmet";
 import {useEffect} from "react"
 
 function App() {
@@ -48,6 +47,9 @@ function App() {
             data-ad-format="auto"
             data-full-width-responsive="true"
           ></ins>
+          <div>
+            <h1>Hola</h1>
+          </div>
           <ins
             className="adsbygoogle"
             style={{ display: 'block' }}
@@ -56,6 +58,9 @@ function App() {
             data-ad-format="auto"
             data-full-width-responsive="true"
           ></ins>
+          <div>
+            <h2>Chau</h2>
+          </div>
           <ins
             className="adsbygoogle"
             style={{ display: 'block' }}
@@ -64,6 +69,9 @@ function App() {
             data-ad-format="auto"
             data-full-width-responsive="true"
           ></ins>
+          <div>
+            <h3>caca</h3>
+          </div>
 
     </div>
   );
