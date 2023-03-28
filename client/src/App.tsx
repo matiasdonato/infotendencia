@@ -20,16 +20,19 @@ function App() {
       <Route exact path={"/"} render={() => <HomePage/>} />
       <Route path={"/articles"} render={() => <Articles/>} />
       <Route path={"/createarticles"} render={() => <CreateArticles/>} />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2912035208235100"
+      crossOrigin="anonymous"></script>
       <ins className="adsbygoogle"
-     // eslint-disable-next-line react/style-prop-object
-     style={myStyles}
-     data-ad-client="ca-pub-2912035208235100"
-     data-ad-slot="6622030279"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+      style={myStyles}
+      data-ad-client="ca-pub-2912035208235100"
+      data-ad-slot="6622030279"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
+
+      
     </div>
   );
 }
