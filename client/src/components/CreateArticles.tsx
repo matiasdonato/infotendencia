@@ -24,20 +24,10 @@ export default function CreateArticles(){
   const [url, setUrl] = useState<string>("");
   const [subTitle, setSubTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [loading, setLoading] = useState(false)
 
 
-  //adding metadata
-  let head = document.querySelector("head")
-  let oldTilte = document.querySelector("title")
-  let meta = document.getElementById("description")
-  //@ts-ignore
-  head?.removeChild(oldTilte)
-  //@ts-ignore
-  let headTitle = document.createElement("title") 
-  headTitle.innerHTML = title
-  head?.appendChild(headTitle)
-  //@ts-ignore
-  meta.content = description
+  
 
 
 
@@ -117,7 +107,7 @@ export default function CreateArticles(){
   function returnData(d: any){
     if (d.dataType === "subtitle") {
         return(
-            <h2 id={`title${d.id}`} > {d.data} </h2>
+            <h2 className=" text-[1.4rem] font-[500] " id={`title${d.id}`} > {d.data} </h2>
         )
     }else if(d.dataType === "text"){
         let value = d.data
@@ -255,6 +245,7 @@ export default function CreateArticles(){
   }
 
 
+  
   async function createArticle() {
     let images = [articleImage?.file]
 
@@ -275,16 +266,31 @@ export default function CreateArticles(){
     }
 
 //title, image: articleImage?.file, data,
-    return axios.post("http://localhost:3001/article", obj , {
+    setLoading(true)
+    await axios.post("http://localhost:3001/article", obj , {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
     .then(r => console.log(r))
     .catch(err => console.log(err))
+    setTitle("")
+    setArticleImage({ prev: "", file: "" })
+    setDescription("")
+    setData([])
+    setLoading(false)
   }
 
+  console.log(loading)
 
+
+  if (loading === true) {
+    return (
+      <div className="flex justify-center items-center w-full h-[80vh] text-[1.8rem] font-[700] " >
+        <p>Loading...</p> 
+      </div>
+    )
+  }
 
   return (
     <div className="flex justify-center  " >

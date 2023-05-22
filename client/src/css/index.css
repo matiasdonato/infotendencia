@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -31,9 +32,27 @@ body {
     height: 100%;
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#0b090a', endColorstr='#061e1f', GradientType=0);
     overflow: auto;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(240, 240, 240);
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+*::selection {
+    background-color: #fffb09;
+}
+
+body {
+    font-family: Libre Franklin, sans-serif;
+    background-color: #eeeaea;
+}
+
+a {
+    color: black;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Merriweather', serif;
 }
